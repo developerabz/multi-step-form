@@ -47,6 +47,12 @@ main {
     border-radius: 100%;
     width: 25%;
     text-align: center;
+
+}
+
+.active {
+    color: black;
+    background-color: #bde2fd;
 }
 
 .sidebar  p {
