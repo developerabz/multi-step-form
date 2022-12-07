@@ -45,8 +45,10 @@ main {
     font-weight: 600;
     color: white;
     border-radius: 100%;
-    width: 25%;
+    /* width: 25%;
+    --width: 25%; */
     text-align: center;
+    /* height: var(--width); */
 
 }
 
@@ -76,7 +78,11 @@ main {
     letter-spacing: 0.1rem;
 }
 
-.step-1 {
+.step-1,
+.step-2,
+.step-3,
+.step-4,
+.step-5 {
     /* border: 1px solid blue; */
     padding: 1rem;
     display: flex;
