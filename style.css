@@ -129,6 +129,19 @@ form > div {
 
 }
 
+.container {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.card {
+    width: 30%;
+    --width: 20%;
+    height: var(--width);
+    border: 1px solid black;
+    
+}
+
 footer {
     margin-top: auto;
 }
