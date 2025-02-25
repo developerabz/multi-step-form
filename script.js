@@ -15,7 +15,7 @@ steps.slice(0, steps.length - 1).forEach(s => {
   const buttons = document.createElement("section");
   buttons.classList.add("buttons");
   const pButton = document.createElement("button");
-  pButton.textContent = "Previous Step";
+  pButton.textContent = "Go Back";
   pButton.classList.add("prev");
   const nButton = document.createElement("button");
   nButton.textContent = "Next Step";
@@ -25,7 +25,7 @@ steps.slice(0, steps.length - 1).forEach(s => {
   s.appendChild(buttons);
 });
 
-step1.querySelector(".buttons").removeChild(document.querySelector(".prev"));
+step1.querySelector(".buttons").querySelector(".prev").style.visibility = "hidden";
 step4.querySelector(".next").textContent = "Submit";
 
 const nextState = (item) => {
