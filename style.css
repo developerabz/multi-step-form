@@ -159,17 +159,79 @@ form > div {
 
 }
 
-.container {
+.content {
+    width: 25vw;
+}
+
+.plan-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    margin: 3rem 0;
 }
 
 .card {
     width: 30%;
-    --width: 20%;
-    height: var(--width);
-    border: 1px solid black;
+    height: auto;
+    border: 1px solid grey;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2rem;
+    border-radius: 8px;
     
+    
+}
+
+.card > img {
+    width: 38px;
+}
+
+.card p {
+    color: grey;
+}
+
+.card .blue-text {
+    color: navy;
+}
+
+.time-period-container {
+    background-color: rgba(0,10,255,0.1);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    border-radius: 8px;
+    
+}
+
+.time-period {
+    display: flex;
+    align-items: center;
+    column-gap: 2ch;
+}
+
+.time-period > span {
+    display: flex;
+    width: 4ch;
+    height: 2ch;
+    padding: 0.2ch;
+    background-color: navy;
+    border-radius: 8px;
+    align-items: center;
+}
+
+.time-period > span > span {
+    display: block;
+    width: 1.5ch;
+    height: 1.5ch;
+    background-color: white;
+    border-radius: 50%;
+
+    transition: transform 0.4s;
+
+}
+
+.yearly-switch {
+    transform: translateX(140%);
 }
 
 .buttons {
