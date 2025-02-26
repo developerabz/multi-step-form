@@ -169,7 +169,7 @@ form > div {
     row-gap: 2rem;
     border-radius: 8px;
     cursor: pointer;
-    
+    transition: background-color 0.2s;
     
 }
 
