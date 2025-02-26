@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
 
-  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
   
   <title>Frontend Mentor | Multi-step form</title>
 
@@ -87,7 +87,7 @@
             <h2>Select your plan</h2>
             <p>You have the option of monthly or yearly billing.</p>
             <div class="plan-container">
-                <div class="card">
+                <div class="card card-active">
                   <img src="./assets/images/icon-arcade.svg" alt="">
                   <div>
                     <h3>Arcade</h3>
@@ -125,19 +125,35 @@
         <section class="step-3">
           <section class="content">
             <h2>Pick add-ons</h2>
+            <p>Add-ons help enhance your gaming experience.</p>
+            <div class="add-on-container">
+                <div class="add-on">
+                    <input type="checkbox" />
+                    <div>
+                        <h3>Online service</h3>
+                        <p>Access to multiplayer games</p>
+                    </div>
+                    <p>+$1/mo</p>
+                </div>
+                <div class="add-on">
+                    <input type="checkbox" />
+                    <div>
+                        <h3>Larger storage</h3>
+                        <p>Extra 1TB of cloud save</p>
+                    </div>
+                    <p>+$2/mo</p>
+                </div>
+                <div class="add-on">
+                    <input type="checkbox" />
+                    <div>
+                        <h3>Customizable profile</h3>
+                        <p>Custom theme on your profile</p>
+                    </div>
+                    <p>+$2/mo</p>
+                </div>
+            </div>
+            
           
-            Add-ons help enhance your gaming experience.
-            Online service
-            Access to multiplayer games
-            +$1/mo
-            Larger storage
-            Extra 1TB of cloud save
-            +$2/mo
-            Customizable Profile
-            Custom theme on your profile
-            +$2/mo
-            Go Back
-            Next Step
           </section>
         
         </section>
