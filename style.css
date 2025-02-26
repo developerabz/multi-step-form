@@ -214,6 +214,7 @@ form > div {
     background-color: navy;
     border-radius: 8px;
     align-items: center;
+    cursor: pointer;
 }
 
 .time-period > span > span {
