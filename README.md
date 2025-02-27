@@ -29,8 +29,7 @@ Users should be able to:
 
 ### Demo video
 
-multi-step-demo.mp4
-
+https://raw.githubusercontent.com/developerabz/multi-step-form/blob/main/multi-step-demo.mp4
 
 ### Links
 
