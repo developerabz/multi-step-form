@@ -120,10 +120,10 @@ h2 {
 form {
     display: flex;
     flex-direction: column;
-    height: 80%;
     /* border: 1px solid black; */
     /* align-items: ; */
     justify-content: space-evenly;
+    row-gap: 1rem;
 }
 
 input[type="text"],
