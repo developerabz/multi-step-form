@@ -103,6 +103,7 @@ main {
     justify-content: space-between;
     align-items: center;
     width: max-content;
+    row-gap: 1rem;
 
     /* align-items: space-between; */
 }
@@ -114,7 +115,6 @@ main {
 
 h2 {
     font-size: 2rem;
-    margin-top: 2rem;
 }
 
 form {
@@ -148,10 +148,13 @@ form > div {
 
 .content {
     width: 25vw;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
 }
 
 .content > p {
-    margin-bottom: 3rem;
+    color: grey;
 }
 
 .plan-container {
@@ -280,11 +283,81 @@ form > div {
     color: blue;
 }
 
+.finish-container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1ch;
+}
+
+.finish-summary {
+
+    background-color: hsla(240,70%,80%,0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1ch;
+}
+
+
+.add-on-summary, .plan-summary, .total-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+}
+
+.plan-summary > div > p {
+    text-decoration: underline;
+    cursor: pointer;
+    color: grey;
+}
+
+.plan-summary > p:last-of-type {
+    font-weight: bold;
+    font-size: 1.05rem;
+}
+
+.total-summary {
+    padding: 0 1rem;
+}
+
+.add-on-summary > p:first-of-type {
+  color: grey
+}
+
+.add-on-summary > p:last-of-type {
+  color: navy;
+  font-weight: 500;
+}
+
+
+.total-summary > p:last-of-type {
+    color: blue;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.middle {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.thank-you-icon {
+    width: 100px;
+    height: auto;
+}
+
 .buttons {
     display: flex;
     justify-content: space-between;
     width: 100%;
 
+}
+
+.step-5 {
+    justify-content: center;
 }
 
 button {

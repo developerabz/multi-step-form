@@ -49,6 +49,30 @@ const planCardsArr = Array.from(planCards);
 
 const addOns = document.querySelectorAll(".add-on");
 const addOnsArr = Array.from(addOns);
+
+
+// step 4 behaviour
+
+const planName = document.getElementById("plan-name");
+const planAmount = document.getElementById("plan-amount");
+const addOnsSummary = document.querySelector(".add-ons-summary");
+const totalSummary = document.querySelector(".total-summary")
+
+const [totalName, totalAmount] = totalSummary.querySelectorAll("p");
+
+
+const createAddOnSummary = (addOnsObj) => {
+  const { addOnName, price } = addOnsObj;
+  const addOnNode = document.createElement("div");
+  addOnNode.classList.add("add-on-summary");
+  const pName = document.createElement("p");
+  pName.textContent = addOnName;
+  const pPrice = document.createElement("p");
+  pPrice.textContent = price;
+  addOnNode.append(pName, pPrice);
+  return addOnNode;
+}
+
 const updatePlan = () => {
   const planCard = planCardsArr.find(pC => pC.classList.contains("card-active"));
   const cardTextContainer = planCard.querySelector("div");
@@ -72,6 +96,29 @@ const updateAddOns = () => {
 
 
 }
+
+const updateSummary = () => {
+  planName.textContent = subscription.plan.planType;
+  planAmount.textContent = subscription.plan.price;
+  const addOnItems = subscription.addOns.map(addOn => createAddOnSummary(addOn));
+  addOnsSummary.replaceChildren(...addOnItems);
+
+  const amounts = [subscription.plan.price, ...subscription.addOns.map(addOn => addOn.price)];
+  const period = amounts[0].split("/")[1];
+  totalName.textContent = period === "mo" ? "Total (per month)" : "Total (per year)";
+
+  const amountsNum = amounts.reduce((acc, curr) => {
+    const amountNum = Number(curr.replace(/\D/g, ''));
+    return acc + amountNum
+
+  }, 0);
+
+  totalAmount.textContent = `+$${amountsNum}/${period}`
+
+}
+
+
+// step 4 behaviour end
 
 const nextState = (item) => {
   step1.style.display = "none";
@@ -100,16 +147,24 @@ const nextState = (item) => {
       break;
     case "four":
       updateAddOns();
+      updateSummary();
       step4.style.display = "flex";
       four.classList.add("active");
       break;
     case "five":
       step5.style.display = "flex";
+
+      four.classList.add("active");
       break;
     default:
       break;
   }
 }
+
+const changePlan = document.querySelector(".change-plan");
+changePlan.addEventListener("click", () => {
+  nextState("two");
+})
 
 
 step1.querySelector(".next").addEventListener("click", () => {
@@ -307,3 +362,5 @@ addOns.forEach(addOn => {
 
   })
 })
+
+
