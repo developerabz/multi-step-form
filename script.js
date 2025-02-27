@@ -42,7 +42,9 @@ steps.slice(0, steps.length - 1).forEach(s => {
 });
 
 step1.querySelector(".buttons").querySelector(".prev").style.visibility = "hidden";
-step4.querySelector(".next").textContent = "Submit";
+const submitButton = step4.querySelector(".next")
+submitButton.textContent = "Submit";
+submitButton.classList.add("submit-button");
 const planCards = document.querySelectorAll(".card");
 const planCardsArr = Array.from(planCards);
 
