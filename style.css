@@ -3,12 +3,25 @@
     margin: 0;
     padding: 0;
 }
+@font-face {
+  font-family: "Ubuntu-Bold";
+  src: url("./assets/fonts/Ubuntu-Bold.ttf")
+}
+@font-face {
+  font-family: "Ubuntu-Medium";
+  src: url("./assets/fonts/Ubuntu-Medium.ttf")
+}
+
+@font-face {
+  font-family: "Ubuntu-Regular";
+  src: url("./assets/fonts/Ubuntu-Regular.ttf")
+}
 
 body {
     background-color: #eef5ff;
     height: 100vh;
     padding: 0.3rem;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: Ubuntu-Regular;
 }
 
 .main-container {
@@ -44,7 +57,7 @@ main {
 
 .one, .two, .three, .four {
     border: 1px solid white;
-    font-weight: 600;
+    font-family: Ubuntu-Medium;
     color: white;
     border-radius: 50%;
     width: 35px;
@@ -132,7 +145,7 @@ input[type="email"] {
     height: 3rem;
     border: 1px solid grey;
     border-radius: 8px;
-    font-weight: bold;
+    font-family: Ubuntu-Medium;
     font-size: 1.2rem;
 
 }
@@ -314,7 +327,7 @@ form > div {
 }
 
 .plan-summary > p:last-of-type {
-    font-weight: bold;
+    font-family: Ubuntu-Bold;
     font-size: 1.05rem;
 }
 
@@ -328,13 +341,13 @@ form > div {
 
 .add-on-summary > p:last-of-type {
   color: navy;
-  font-weight: 500;
+  font-family: Ubuntu-Medium;
 }
 
 
 .total-summary > p:last-of-type {
     color: blue;
-    font-weight: bold;
+    font-family: Ubuntu-Bold;
     font-size: 1.2rem;
 }
 
@@ -367,7 +380,7 @@ button {
     background-color: #03285b;
     border: none;
     border-radius: 0.5rem;
-    font-weight: 800;
+    font-family: Ubuntu-Medium;
     font-size: 0.9rem;
     cursor: pointer;
 }
