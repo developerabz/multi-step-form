@@ -1,4 +1,9 @@
 const subscription = {
+  personalInfo: {
+    name: "",
+    email: "",
+    phone: "",
+  },
   plan: {
     planType: "Arcade",
     price: "$9/mo",
@@ -167,10 +172,68 @@ const changePlan = document.querySelector(".change-plan");
 changePlan.addEventListener("click", () => {
   nextState("two");
 })
+const personalName = document.getElementsByName("name")[0]
+const personalEmail = document.getElementsByName("email")[0]
+const personalPhone = document.getElementsByName("phone")[0]
+const personalForm = document.querySelector("form");
+const showNameError = () => {
+  personalName.style.border = "1px solid red"
+}
+const hideNameError = () => {
+  personalName.style.border = "1px solid grey"
+}
+const showEmailError = () => {
+  personalEmail.style.border = "1px solid red"
+}
+const hideEmailError = () => {
+  personalEmail.style.border = "1px solid grey"
+}
+personalName.addEventListener("change", (event) => {
+  if (!/^[\w]+$/.test(event.target.value.trim())) {
+
+    showNameError()
+  } else {
+    hideNameError()
+    subscription.personalInfo.name = event.target.value.trim();
+  }
+})
+
+
+personalEmail.addEventListener("change", (event) => {
+  if (!/^.+@.+\..+$/.test(event.target.value.trim())) {
+    showEmailError()
+  } else {
+    hideEmailError()
+    subscription.personalInfo.email = event.target.value.trim();
+  }
+})
+
+personalPhone.addEventListener("change", (event) => {
+
+  subscription.personalInfo.phone = event.target.value.trim();
+})
+
+
+
+
+const checkRequiredDetails = () => {
+  return personalForm.reportValidity();
+}
+
+const updateDetails = () => {
+  const pName = personalName.value.trim();
+  const email = personalEmail.value.trim();
+  const phone = personalPhone.value.trim();
+  subscription.personalInfo = { name: pName, email, phone };
+}
+
 
 
 step1.querySelector(".next").addEventListener("click", () => {
-  nextState("two");
+  if (checkRequiredDetails()) {
+    updateDetails();
+    nextState("two");
+  }
 });
 
 
