@@ -5,6 +5,9 @@
   "author": "Abdullah Yakub (developerabz)",
   "type": "module",
   "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "start": "node index",
     "dev": "nodemon index",
