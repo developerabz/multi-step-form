@@ -22,7 +22,7 @@ app.get('/api/works', (req, res) => {
   }
 
   const jObj = JSON.stringify(obj);
-  console.log(jObj);
+  // console.log(jObj);
 
   res.send(jObj);
 })
