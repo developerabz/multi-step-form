@@ -230,8 +230,18 @@ const updateDetails = () => {
 
 
 step1.querySelector(".next").addEventListener("click", () => {
+  fetch("http://localhost:3000/api/works", {
+    method: 'GET',
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+    .then(r => r.json())
+    .then(data => console.log(data))
+    .catch(err => console.error(err));
   if (checkRequiredDetails()) {
     updateDetails();
+
     nextState("two");
   }
 });
