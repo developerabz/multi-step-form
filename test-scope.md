@@ -25,7 +25,7 @@ Each usability requirement will have a respective usability test:
 
 ## Functionality Tests
 
-The following are the Functionality requirements:
+The following are the functionality requirements have a respective test(s):
 - User input should be correctly validated when submitted
   - Unit Test: check that the input meets the requirements using expect blocks in Jest 
 - User input should be saved as required 
@@ -33,4 +33,10 @@ The following are the Functionality requirements:
 - User choices should be rendered correctly on the last page prior to submission
   - Usability test: view step 4 and ensure that the correct info is visible on the summary page
   - Unit Test: ensure the fields needed for rendering are saved into the backend
+
+
+## API Tests 
+
+Testing should be done for each API request using curl, postman or similar tooling 
+
 
