@@ -1,6 +1,6 @@
 # Frontend Mentor - Multi-step form solution
 
-See live: https://developerabz.github.io/multi-step-form/
+See live: https://atom-low-ostrich.glitch.me/
 
 This is a solution to the [Multi-step form challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/multistep-form-YVAnSdqQBJ). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
@@ -37,7 +37,7 @@ https://github.com/user-attachments/assets/08e47393-6f18-4308-a5a8-d65927b54b8b
 ### Links
 
 - Solution URL: https://github.com/developerabz/multi-step-form
-- Live Site URL: https://developerabz.github.io/multi-step-form/
+- Live Site URL: https://atom-low-ostrich.glitch.me/
 
 ## My process
 
