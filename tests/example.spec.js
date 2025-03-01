@@ -23,3 +23,13 @@ test('sum two numbers', () => {
 
   expect(sum(1, 2)).toStrictEqual(3)
 })
+
+test('go to next step', async ({ page }) => {
+  await page.goto('http://localhost:3000');
+
+  // Click the get started link.
+  await page.getByRole('button', { name: 'Next Step' }).click();
+
+  // Expects page to have a heading with the name of Installation.
+  await expect(page.getByRole('heading', { name: 'Personal info' })).toBeVisible();
+});
