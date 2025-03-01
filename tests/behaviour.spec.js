@@ -5,7 +5,7 @@ import { link } from 'fs';
 test.describe('step 1 tests', () => {
 
   test.beforeEach(async ({ page }) => {
-    await page.goto("https://atom-low-ostrich.glitch.me")
+    await page.goto("http://localhost:3000")
   })
 
   test('go to next step without input', async ({ page }) => {
