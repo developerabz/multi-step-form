@@ -27,7 +27,7 @@ Each usability requirement will have a respective usability test:
 
 The following are the functionality requirements have a respective test(s):
 - User input should be correctly validated when submitted
-  - Unit Test: check that the input meets the requirements using expect blocks in Jest 
+  - Unit Test: check that the input meets the requirements using expect blocks in Playwright 
 - User input should be saved as required 
   - Unit Test: check input is being saved into the backend
 - User choices should be rendered correctly on the last page prior to submission
