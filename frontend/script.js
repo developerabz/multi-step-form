@@ -230,7 +230,7 @@ const updateDetails = () => {
 
 
 step1.querySelector(".next").addEventListener("click", () => {
-  fetch("http://localhost:3000/api/works", {
+  fetch("https://atom-low-ostrich.glitch.me/api/works", {
     method: 'GET',
     headers: {
       "Content-Type": "application/json"
