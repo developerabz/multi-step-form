@@ -60,7 +60,10 @@ To build (for testing webkit) docker use the following:
 To run:
 ```bash docker run --rm -v $(pwd):/app -w /app playwright-tests
 ```
+### produrl and localurl bash scripts 
 
+There are two shell scripts in the folder; produrl.sh and localurl.sh. 
+These are primarily for being able to switch between testing the development and production versions of the site.
 
 ## Author
 
