@@ -172,4 +172,3 @@ test.describe('step 2 tests', () => {
 
 });
 
-// TODO: try to get webkit tests to work using docker
