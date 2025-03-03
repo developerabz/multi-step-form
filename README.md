@@ -55,10 +55,12 @@ https://github.com/user-attachments/assets/08e47393-6f18-4308-a5a8-d65927b54b8b
 ### Docker build (Linux)
 
 To build (for testing webkit) docker use the following:
-```bash docker build -t playwright-tests .
+```bash
+docker build -t playwright-tests .
 ```
 To run:
-```bash docker run --rm -v $(pwd):/app -w /app playwright-tests
+```bash
+docker run --rm -v $(pwd):/app -w /app playwright-tests
 ```
 ### produrl and localurl bash scripts 
 
