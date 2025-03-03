@@ -49,6 +49,17 @@ https://github.com/user-attachments/assets/08e47393-6f18-4308-a5a8-d65927b54b8b
 - CSS Grid
 - Mobile-first workflow
 - Vanilla JavaScript
+- Playwright
+- Docker 
+
+### Docker build (Linux)
+
+To build (for testing webkit) docker use the following:
+```bash docker build -t playwright-tests .
+```
+To run:
+```bash docker run --rm -v $(pwd):/app -w /app playwright-tests
+```
 
 
 ## Author
