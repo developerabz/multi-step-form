@@ -17,8 +17,7 @@
 
 node_modules/
 
-# Docker
-Dockerfile
+
 
 # Playwright
 /test-results/
