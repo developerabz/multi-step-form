@@ -199,3 +199,6 @@ test.describe('step 2 tests', () => {
 
 });
 
+// TODO: Add test for step 3 - clicking card toggles checkboxes and changes background
+//
+
