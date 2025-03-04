@@ -189,7 +189,7 @@ const hideEmailError = () => {
   personalEmail.style.border = "1px solid grey"
 }
 personalName.addEventListener("change", (event) => {
-  if (!/^[\w]+$/.test(event.target.value.trim())) {
+  if (!/^[\w ]+$/.test(event.target.value.trim())) {
 
     showNameError()
   } else {

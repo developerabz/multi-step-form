@@ -1,5 +1,6 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import exp from 'constants';
 import { link } from 'fs';
 
 test.beforeEach(async ({ page }) => {
@@ -88,8 +89,7 @@ test.describe('step 1 tests', () => {
 
 test.describe('step 2 tests', () => {
 
-  test('check arcade is default selected', async ({ page }) => {
-
+  test.beforeEach(async ({ page }) => {
     await page.getByLabel('Name').fill("Stephen King")
 
     await page.getByLabel('Email Address').fill('Stephen@King.com')
@@ -97,6 +97,9 @@ test.describe('step 2 tests', () => {
     await page.getByRole('button', { name: 'Next Step' }).click();
 
     await expect(page.getByRole('heading', { name: 'Select your plan' })).toBeVisible();
+  })
+
+  test('check arcade is default selected', async ({ page }) => {
 
     // Check arcade is chosen
     const arcade = page.getByRole('heading', { name: 'Arcade' })
@@ -108,14 +111,6 @@ test.describe('step 2 tests', () => {
   });
 
   test('check plan changes to advanced', async ({ page }) => {
-    await page.getByLabel('Name').fill("Stephen King")
-
-    await page.getByLabel('Email Address').fill('Stephen@King.com')
-
-    await page.getByRole('button', { name: 'Next Step' }).click();
-
-    await expect(page.getByRole('heading', { name: 'Select your plan' })).toBeVisible();
-
     // Check arcade is chosen
     const arcade = page.getByRole('heading', { name: 'Arcade' })
       .locator('..')
@@ -137,20 +132,12 @@ test.describe('step 2 tests', () => {
   })
 
   test('check plan changes to pro', async ({ page }) => {
-    await page.getByLabel('Name').fill("Stephen King")
-
-    await page.getByLabel('Email Address').fill('Stephen@King.com')
-
-    await page.getByRole('button', { name: 'Next Step' }).click();
-
-    await expect(page.getByRole('heading', { name: 'Select your plan' })).toBeVisible();
-
     // Check arcade is chosen
     const arcade = page.getByRole('heading', { name: 'Arcade' })
       .locator('..')
       .locator('..');
 
-    const pro = page.getByRole('heading', { name: 'Advanced' })
+    const pro = page.getByRole('heading', { name: 'Pro' })
       .locator('..')
       .locator('..');
 
@@ -165,9 +152,49 @@ test.describe('step 2 tests', () => {
     await expect(pro).toHaveClass(/card-active/);
   })
 
-  // TODO: Add tests for the monthly to yearly switch and also checking text 
-  // when each card switches to yearly check that 2 months free text is added
 
+  test('check monthly to yearly switch works', async ({ page }) => {
+    const switchButton = page.locator('.time-period')
+      .locator(':scope > span')
+      .locator(':scope > span');
+
+    await expect(switchButton).not.toHaveClass('yearly-switch');
+
+    await switchButton.click();
+
+    await expect(switchButton).toHaveClass('yearly-switch');
+
+
+  })
+
+  test('check 2 months free text rendering when yearly switch', async ({ page }) => {
+    // Check arcade is chosen
+    let cards = page.locator('.card');
+    let cardsLength = await cards.count();
+
+    const switchButton = page.locator('.time-period')
+      .locator(':scope > span')
+      .locator(':scope > span');
+
+    for (let i = 0; i < cardsLength; i++) {
+
+      const pElements = await cards.nth(i).locator('p').count();
+      expect(pElements).toBe(1)
+    }
+
+    cards = page.locator('.card');
+    cardsLength = await cards.count();
+
+    await switchButton.click();
+
+    for (let i = 0; i < cardsLength; i++) {
+
+      const pElements = await cards.nth(i).locator('p').count();
+      expect(pElements).toBe(2)
+    }
+
+
+  })
 
 
 });
