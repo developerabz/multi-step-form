@@ -196,9 +196,63 @@ test.describe('step 2 tests', () => {
 
   })
 
+  test('transition to step 3 works', async ({ page }) => {
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Pick add-ons' })).toBeVisible();
+  })
+
 
 });
 
-// TODO: Add test for step 3 - clicking card toggles checkboxes and changes background
-//
+test.describe('step 2 tests', () => {
 
+  test.beforeEach(async ({ page }) => {
+    await page.getByLabel('Name').fill("Stephen King")
+
+    await page.getByLabel('Email Address').fill('Stephen@King.com')
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Select your plan' })).toBeVisible();
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Pick add-ons' })).toBeVisible();
+
+  })
+
+  test('input gets checked and add-on styles correctly', async ({ page }) => {
+    let addOns = page.locator('.add-on');
+    let addOnsLength = await addOns.count();
+
+    for (let i = 0; i < addOnsLength; i++) {
+      const addOn = addOns.nth(i);
+      const input = addOn.locator(':scope > input');
+      await expect(addOn).not.toHaveClass(/card-active/);
+      await expect(input).not.toBeChecked();
+
+      await addOn.click();
+
+
+      await expect(addOn).toHaveClass(/card-active/);
+      await expect(input).toBeChecked();
+
+
+    }
+
+  });
+
+  test('transition to step 4 works', async ({ page }) => {
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Finishing up' })).toBeVisible();
+
+
+  })
+
+
+});
+
+// TODO: write step 4 tests
