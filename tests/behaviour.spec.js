@@ -1,5 +1,6 @@
 // @ts-check
 import { test, expect } from '@playwright/test';
+import assert from 'assert';
 import exp from 'constants';
 import { link } from 'fs';
 
@@ -206,7 +207,7 @@ test.describe('step 2 tests', () => {
 
 });
 
-test.describe('step 2 tests', () => {
+test.describe('step 3 tests', () => {
 
   test.beforeEach(async ({ page }) => {
     await page.getByLabel('Name').fill("Stephen King")
@@ -255,4 +256,186 @@ test.describe('step 2 tests', () => {
 
 });
 
-// TODO: write step 4 tests
+
+test.describe.only('step 4 tests', () => {
+
+  test.beforeEach(async ({ page }) => {
+    await page.getByLabel('Name').fill("Stephen King")
+
+    await page.getByLabel('Email Address').fill('Stephen@King.com')
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Select your plan' })).toBeVisible();
+  });
+
+  test('arcade plan calculation', async ({ page }) => {
+    const arcade = page.getByRole('heading', { name: 'Arcade' })
+      .locator('..')
+      .locator(':scope >> p');
+
+    const arcadeText = await arcade.textContent();
+
+    assert(arcadeText !== null);
+
+    const arcadeAmount = Number(arcadeText.replace(/\D/g, ''));
+
+    expect(arcadeAmount).toStrictEqual(9);
+
+    // navigate to step 3
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Pick add-ons' })).toBeVisible();
+
+    const onlineService = page.getByRole('heading', { name: 'Online service' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const oSText = await onlineService.textContent();
+
+    assert(oSText !== null);
+
+    const oS = Number(oSText.replace(/\D/g, ''));
+
+    expect(oS).toStrictEqual(1);
+
+    const largerStorage = page.getByRole('heading', { name: 'Larger storage' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const lSText = await largerStorage.textContent();
+
+    assert(lSText !== null);
+
+    const lS = Number(lSText.replace(/\D/g, ''));
+
+    expect(lS).toStrictEqual(2);
+
+
+    const customizableProfile = page.getByRole('heading', { name: 'Customizable profile' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const cPText = await customizableProfile.textContent();
+
+    assert(cPText !== null);
+
+    const cP = Number(cPText.replace(/\D/g, ''));
+
+    expect(cP).toStrictEqual(2);
+
+    // navigate to step 4
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Finishing up' })).toBeVisible();
+
+
+    // No add ons selected
+
+    let totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    let totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+
+    let total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount);
+
+    // one add on selected 
+
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await onlineService.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + oS);
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await onlineService.click();
+    await largerStorage.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + lS);
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + cP);
+
+    // two add ons selected
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + cP + lS);
+
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await onlineService.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + cP + oS);
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + oS + lS);
+
+    // all three add ons selected 
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + oS + cP + lS);
+
+
+
+
+
+
+  })
+
+});
+// TODO: write the following step 4 tests:
+// - Test pro plan selection with all combinations of add ons 
+// - Test advanced plan selection with all combinations of add ons 
+// - test all three again but with yearly not monthly 
+// - test change plan button by selecting different plans and seeing changes 
