@@ -427,15 +427,874 @@ test.describe.only('step 4 tests', () => {
     expect(total).toStrictEqual(arcadeAmount + oS + cP + lS);
 
 
+  });
+
+
+  test('pro plan calculation', async ({ page }) => {
+    const pro = page.getByRole('heading', { name: 'Pro' })
+      .locator('..')
+      .locator(':scope >> p');
+
+
+    await pro.click();
+
+    const proText = await pro.textContent();
+
+    assert(proText !== null);
+
+    const proAmount = Number(proText.replace(/\D/g, ''));
+
+    expect(proAmount).toStrictEqual(15);
+
+    // navigate to step 3
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Pick add-ons' })).toBeVisible();
+
+    const onlineService = page.getByRole('heading', { name: 'Online service' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const oSText = await onlineService.textContent();
+
+    assert(oSText !== null);
+
+    const oS = Number(oSText.replace(/\D/g, ''));
+
+    expect(oS).toStrictEqual(1);
+
+    const largerStorage = page.getByRole('heading', { name: 'Larger storage' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const lSText = await largerStorage.textContent();
+
+    assert(lSText !== null);
+
+    const lS = Number(lSText.replace(/\D/g, ''));
+
+    expect(lS).toStrictEqual(2);
+
+
+    const customizableProfile = page.getByRole('heading', { name: 'Customizable profile' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const cPText = await customizableProfile.textContent();
+
+    assert(cPText !== null);
+
+    const cP = Number(cPText.replace(/\D/g, ''));
+
+    expect(cP).toStrictEqual(2);
+
+    // navigate to step 4
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Finishing up' })).toBeVisible();
+
+
+    // No add ons selected
+
+    let totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    let totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+
+    let total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount);
+
+    // one add on selected 
+
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await onlineService.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + oS);
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await onlineService.click();
+    await largerStorage.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + lS);
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + cP);
+
+    // two add ons selected
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + cP + lS);
+
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await onlineService.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + cP + oS);
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + oS + lS);
+
+    // all three add ons selected 
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + oS + cP + lS);
+
+
+  });
+
+
+  test('advanced plan calculation', async ({ page }) => {
+    const advanced = page.getByRole('heading', { name: 'Advanced' })
+      .locator('..')
+      .locator(':scope >> p');
+
+    await advanced.click();
+
+    const advancedText = await advanced.textContent();
+
+    assert(advancedText !== null);
+
+    const advancedAmount = Number(advancedText.replace(/\D/g, ''));
+
+    expect(advancedAmount).toStrictEqual(12);
+
+    // navigate to step 3
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Pick add-ons' })).toBeVisible();
+
+    const onlineService = page.getByRole('heading', { name: 'Online service' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const oSText = await onlineService.textContent();
+
+    assert(oSText !== null);
+
+    const oS = Number(oSText.replace(/\D/g, ''));
+
+    expect(oS).toStrictEqual(1);
+
+    const largerStorage = page.getByRole('heading', { name: 'Larger storage' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const lSText = await largerStorage.textContent();
+
+    assert(lSText !== null);
+
+    const lS = Number(lSText.replace(/\D/g, ''));
+
+    expect(lS).toStrictEqual(2);
+
+
+    const customizableProfile = page.getByRole('heading', { name: 'Customizable profile' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const cPText = await customizableProfile.textContent();
+
+    assert(cPText !== null);
+
+    const cP = Number(cPText.replace(/\D/g, ''));
+
+    expect(cP).toStrictEqual(2);
+
+    // navigate to step 4
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Finishing up' })).toBeVisible();
+
+
+    // No add ons selected
+
+    let totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    let totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+
+    let total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount);
+
+    // one add on selected 
+
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await onlineService.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + oS);
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await onlineService.click();
+    await largerStorage.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + lS);
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + cP);
+
+    // two add ons selected
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + cP + lS);
+
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await onlineService.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + cP + oS);
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + oS + lS);
+
+    // all three add ons selected 
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + oS + cP + lS);
+
+
+  });
 
 
 
 
-  })
+
+  test('arcade plan calculation yearly', async ({ page }) => {
+    const switchButton = page.locator('.time-period')
+      .locator(':scope > span')
+      .locator(':scope > span');
+
+    await expect(switchButton).not.toHaveClass('yearly-switch');
+
+    await switchButton.click();
+
+    await expect(switchButton).toHaveClass('yearly-switch');
+
+
+    const arcade = page.getByRole('heading', { name: 'Arcade' })
+      .locator('..')
+      .locator(':scope >> p').first();
+
+
+    await arcade.click();
+
+    const arcadeText = await arcade.textContent();
+
+    assert(arcadeText !== null);
+
+    const arcadeAmount = Number(arcadeText.replace(/\D/g, ''));
+
+    expect(arcadeAmount).toStrictEqual(90);
+
+    // navigate to step 3
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Pick add-ons' })).toBeVisible();
+
+    const onlineService = page.getByRole('heading', { name: 'Online service' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const oSText = await onlineService.textContent();
+
+    assert(oSText !== null);
+
+    const oS = Number(oSText.replace(/\D/g, ''));
+
+    expect(oS).toStrictEqual(10);
+
+    const largerStorage = page.getByRole('heading', { name: 'Larger storage' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const lSText = await largerStorage.textContent();
+
+    assert(lSText !== null);
+
+    const lS = Number(lSText.replace(/\D/g, ''));
+
+    expect(lS).toStrictEqual(20);
+
+
+    const customizableProfile = page.getByRole('heading', { name: 'Customizable profile' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const cPText = await customizableProfile.textContent();
+
+    assert(cPText !== null);
+
+    const cP = Number(cPText.replace(/\D/g, ''));
+
+    expect(cP).toStrictEqual(20);
+
+    // navigate to step 4
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Finishing up' })).toBeVisible();
+
+
+    // No add ons selected
+
+    let totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    let totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+
+    let total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount);
+
+    // one add on selected 
+
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await onlineService.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + oS);
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await onlineService.click();
+    await largerStorage.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + lS);
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + cP);
+
+    // two add ons selected
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + cP + lS);
+
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await onlineService.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + cP + oS);
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + oS + lS);
+
+    // all three add ons selected 
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(arcadeAmount + oS + cP + lS);
+
+
+  });
+
+
+  test('pro plan calculation yearly', async ({ page }) => {
+
+    const switchButton = page.locator('.time-period')
+      .locator(':scope > span')
+      .locator(':scope > span');
+
+    await expect(switchButton).not.toHaveClass('yearly-switch');
+
+    await switchButton.click();
+
+    await expect(switchButton).toHaveClass('yearly-switch');
+
+    const pro = page.getByRole('heading', { name: 'Pro' })
+      .locator('..')
+      .locator(':scope >> p').first();
+
+
+    await pro.click();
+
+    const proText = await pro.textContent();
+
+    assert(proText !== null);
+
+    const proAmount = Number(proText.replace(/\D/g, ''));
+
+    expect(proAmount).toStrictEqual(150);
+
+    // navigate to step 3
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Pick add-ons' })).toBeVisible();
+
+    const onlineService = page.getByRole('heading', { name: 'Online service' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const oSText = await onlineService.textContent();
+
+    assert(oSText !== null);
+
+    const oS = Number(oSText.replace(/\D/g, ''));
+
+    expect(oS).toStrictEqual(10);
+
+    const largerStorage = page.getByRole('heading', { name: 'Larger storage' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const lSText = await largerStorage.textContent();
+
+    assert(lSText !== null);
+
+    const lS = Number(lSText.replace(/\D/g, ''));
+
+    expect(lS).toStrictEqual(20);
+
+
+    const customizableProfile = page.getByRole('heading', { name: 'Customizable profile' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const cPText = await customizableProfile.textContent();
+
+    assert(cPText !== null);
+
+    const cP = Number(cPText.replace(/\D/g, ''));
+
+    expect(cP).toStrictEqual(20);
+
+    // navigate to step 4
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Finishing up' })).toBeVisible();
+
+
+    // No add ons selected
+
+    let totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    let totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+
+    let total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount);
+
+    // one add on selected 
+
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await onlineService.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + oS);
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await onlineService.click();
+    await largerStorage.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + lS);
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + cP);
+
+    // two add ons selected
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + cP + lS);
+
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await onlineService.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + cP + oS);
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + oS + lS);
+
+    // all three add ons selected 
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(proAmount + oS + cP + lS);
+
+
+  });
+
+
+  test('advanced plan calculation yearly', async ({ page }) => {
+
+    const switchButton = page.locator('.time-period')
+      .locator(':scope > span')
+      .locator(':scope > span');
+
+    await expect(switchButton).not.toHaveClass('yearly-switch');
+
+    await switchButton.click();
+
+    await expect(switchButton).toHaveClass('yearly-switch');
+
+    const advanced = page.getByRole('heading', { name: 'Advanced' })
+      .locator('..')
+      .locator(':scope >> p').first();
+
+
+    await advanced.click();
+
+    const advancedText = await advanced.textContent();
+
+    assert(advancedText !== null);
+
+    const advancedAmount = Number(advancedText.replace(/\D/g, ''));
+
+    expect(advancedAmount).toStrictEqual(120);
+
+    // navigate to step 3
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Pick add-ons' })).toBeVisible();
+
+    const onlineService = page.getByRole('heading', { name: 'Online service' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const oSText = await onlineService.textContent();
+
+    assert(oSText !== null);
+
+    const oS = Number(oSText.replace(/\D/g, ''));
+
+    expect(oS).toStrictEqual(10);
+
+    const largerStorage = page.getByRole('heading', { name: 'Larger storage' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const lSText = await largerStorage.textContent();
+
+    assert(lSText !== null);
+
+    const lS = Number(lSText.replace(/\D/g, ''));
+
+    expect(lS).toStrictEqual(20);
+
+
+    const customizableProfile = page.getByRole('heading', { name: 'Customizable profile' })
+      .locator('..')
+      .locator('..')
+      .locator(':scope > p');
+
+    const cPText = await customizableProfile.textContent();
+
+    assert(cPText !== null);
+
+    const cP = Number(cPText.replace(/\D/g, ''));
+
+    expect(cP).toStrictEqual(20);
+
+    // navigate to step 4
+
+    await page.getByRole('button', { name: 'Next Step' }).click();
+
+    await expect(page.getByRole('heading', { name: 'Finishing up' })).toBeVisible();
+
+
+    // No add ons selected
+
+    let totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    let totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+
+    let total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount);
+
+    // one add on selected 
+
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await onlineService.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + oS);
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await onlineService.click();
+    await largerStorage.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + lS);
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + cP);
+
+    // two add ons selected
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + cP + lS);
+
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await onlineService.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + cP + oS);
+
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await largerStorage.click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + oS + lS);
+
+    // all three add ons selected 
+    await page.getByRole('button', { name: 'Go Back' }).click();
+    await customizableProfile.click();
+    await page.getByRole('button', { name: 'Next Step' }).click();
+    totalSummary = page.locator('.total-summary')
+      .locator(':scope > p')
+    totalText = await totalSummary.nth(1).textContent();
+    assert(totalText !== null);
+    total = Number(totalText.replace(/\D/g, ''));
+    expect(total).toStrictEqual(advancedAmount + oS + cP + lS);
+
+
+  });
+
+
+  test.afterEach(async ({ page }) => {
+
+    await page.reload();
+
+    await expect(page.getByRole('heading', { name: 'Personal info' })).toBeVisible();
+  });
+
+
 
 });
 // TODO: write the following step 4 tests:
-// - Test pro plan selection with all combinations of add ons 
-// - Test advanced plan selection with all combinations of add ons 
-// - test all three again but with yearly not monthly 
 // - test change plan button by selecting different plans and seeing changes 
+// - check navigation to step 5
